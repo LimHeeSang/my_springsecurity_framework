@@ -30,11 +30,14 @@ public class JwtTokenProvider {
     private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 30;            // 30분
     private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 7;  // 7일
 
+    private final UserDetailsServiceImpl userDetailsService;
+
     private final Key key;
 
-    public JwtTokenProvider(@Value("${jwt.secret}") String secretKey) {
+    public JwtTokenProvider(@Value("${jwt.secret}") String secretKey, UserDetailsServiceImpl userDetailsService) {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         this.key = Keys.hmacShaKeyFor(keyBytes);
+        this.userDetailsService = userDetailsService;
     }
 
 
@@ -84,12 +87,15 @@ public class JwtTokenProvider {
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
 
-        log.info("[권한 정보 = {}]", authorities);
+        log.info("[claims.getSubject() = {}]", claims.getSubject());
 
-        // UserDetails 객체를 만들어서 Authentication 리턴
-        UserDetails principal = new User(claims.getSubject(), "", authorities);
 
-        return new UsernamePasswordAuthenticationToken(principal, "", authorities);
+        // UserDetailsService를 이용하여 UserDetails 객체를 가져와서서 Authentication리턴
+        //UserDetails principal = new User(claims.getSubject(), "", authorities);
+
+        UserDetails userDetails = userDetailsService.loadUserByUsername(claims.getSubject());
+
+        return new UsernamePasswordAuthenticationToken(userDetails, "", authorities);
     }
 
     public boolean validateToken(String token) {
