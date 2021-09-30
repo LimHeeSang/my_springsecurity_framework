@@ -67,6 +67,6 @@ ex)잘못된 JWT 서명입니다, 지원되지 않는 JWT 토큰입니다. => �
 [깃허브 주소](https://github.com/koogk7/LoginApiForJwtAndSecurity#-jwt%EC%99%80-springsecurity%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EB%A1%9C%EA%B7%B8%EC%9D%B8-%EB%B0%8F-%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85-rest-api)      
 
 
-### JWT token관련 개념과 보안 이슈관련 내용을 잘 정리해둔 곳(댓글)
+### JWT Token관련 개념과 보안 이슈관련 내용을 잘 정리해둔 곳(댓글) - 시간날때 읽어보기
 [블로그 주소](https://blog.outsider.ne.kr/1160)
 
