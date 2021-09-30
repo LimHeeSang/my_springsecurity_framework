@@ -1,5 +1,6 @@
 package myframework.myspringsecurity.security;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import myframework.myspringsecurity.security.handler.JwtAccessDeniedHandler;
 import myframework.myspringsecurity.security.handler.JwtAuthenticationEntryPoint;
@@ -23,6 +24,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public ObjectMapper objectMapper() {
+        return new ObjectMapper();
     }
 
     @Override
