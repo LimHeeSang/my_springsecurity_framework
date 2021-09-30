@@ -6,7 +6,7 @@
 
 ## 특징
 + spring security는 기본적으로 세션기반으로 설계되어있지만, 이 프로젝트에서는 jwt토큰을 이용하였다.
-+ (토큰을 이용한 검증, 발급, 인증수행 과정이 필요하기 때문에 세션기반의 인증방식과 살짝 차이가 있다.)
+ (토큰을 이용한 검증, 발급, 인증수행 과정이 필요하기 때문에 세션기반의 인증방식과 살짝 차이가 있다.)
 + jwt 토큰을 이용하여 사용자 로그인을 통한 인증을 수행할 수 있고, 각 서버에서 부여한 권한에 따라 요청할 수 있는 api를 제한할 수 있다.
 + 인증을 위해 필요한 access token과 별개로 만료된 토큰을 재발급 받기 위해서는 refresh token인 재발급용 토큰을 따로 발급해준다. (보안적인 요소 고려)
 + refresh token을 따로 관리하기 위해 redis를 많이 쓴다고 알고있는데, 아직 redis를 공부해본 적이 없어서 rdb로 기능만 구현했다. 나중에 공부하게되면 리팩토링 할 계획이다. 
@@ -16,7 +16,7 @@
 
 ## 구조
 + spring security는 필터기반으로 아키텍쳐가 구성되어 있다.
-+ 요청이 오면 필터가 가로채서 미인증 객체(UsernamePasswordAuthenticationToken)를 생성해서 AuthenticationManger<<interface>>한테 넘기면 AuthenticationManger에서 인증을 처리할 수 있는 
++ 요청이 오면 필터가 가로채서 미인증 객체(UsernamePasswordAuthenticationToken)를 생성해서 AuthenticationManger(interface)한테 넘기면 AuthenticationManger에서 인증을 처리할 수 있는 
 AuthenticationProvider를 찾아서 미인증 객체를 또 넘긴다. AuthenticationProvider는 UserDetailsService를 이용하여 인증(authenticate)과정을 수행 후 인증 된 객체를 생성하여 Security 
 Context에 저장 후 관리한다. (기본적으로 세션방식이 이렇다.)
 + Jwt token 방식에서는 토큰을 생성하고 검증하고 인증객체를 생성해주는 JwtTokenProvider를 만들어서 이용한다. JwtTokenProvider역시 UserDetailsService를 이용하고 token을 검증 후에 인증 
@@ -40,7 +40,7 @@ private static String hasRole(String role) {
         }
     }
 ```
-<br/><br/>
+
   + 해결
   1. hasRole 함수가 아닌 hasAuthority 함수를 사용한다.
   2. UserDetails를 구현한 Entity객체의 getAuthorities()함수에서 ROLE_를 덧붙여준다.
