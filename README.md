@@ -58,7 +58,7 @@ private static String hasRole(String role) {
 
 ## 개선해야할 점
 + refresh token을 redis로 관리
-+ refresh token에도 만료시간 설정하여 만료된 토큰 자동 삭제
++ refresh token에도 만료시간이 지나면 만료된 토큰 자동 삭제
 + jwt token 로그아웃 기능 구현(api)
 + OAuth 2.0 인증 방법 추가하기
 + jwt 검증 실패관련 예외처리를 클라이언트한테 친절하게 내려줄지? 
